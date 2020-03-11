@@ -13,7 +13,7 @@ NC='\033[0m'
 # Credentials
 USERID=$(date +%s | sha256sum | base64 | head -c 3 ; echo)
 USERPASS=$(date +%s | sha256sum | base64 | head -c 6 ; echo)
-RATHENAPASS="princess21"
+adminPASS="princess21"
 RAGSQLPASS=$(date +%s | sha256sum | base64 | head -c 10 ; echo)
 
 # URLs
@@ -102,7 +102,7 @@ echo "${YELLOW}This process is automatic and doesn't require user input.${NC}"
 echo "${YELLOW}Please do not type at the password prompt.${NC}"
 wget -q https://raw.githubusercontent.com/gamingmagic/debianrathena/master/createuser.sh
 chmod +x createuser.sh
-./createuser.sh $RATHENAPASS
+./createuser.sh $adminPASS
 rm createuser.sh
 gpasswd -a admin sudo
 echo ""
@@ -128,11 +128,9 @@ echo ""
 echo "${BLUE}Step 9/${STEPS}:${NC} Creating VNC Server Start-up Files"
 cd /usr/local/bin
 wget -q https://raw.githubusercontent.com/gamingmagic/debianrathena/master/myvncserver
-#unzip -qq myvncserver.zip
 chmod +x myvncserver
 cd /lib/systemd/system/
 wget -q https://raw.githubusercontent.com/gamingmagic/debianrathena/master/myvncserver2.service
-#unzip -qq myvncserver2.zip
 systemctl daemon-reload
 systemctl enable myvncserver2.service
 echo ""
@@ -144,9 +142,8 @@ chown -R admin:admin /home/admin
 chown -R admin:admin /usr/share/fenrirmachine
 cd /home/admin
 sudo -u admin sh -c "wget -q https://raw.githubusercontent.com/gamingmagic/debianrathena/master/vnc.sh"
-#sudo -u admin sh -c "unzip -qq vnc.zip"
 sudo -u admin sh -c "chmod +x vnc.sh"
-sudo -u admin sh -c "./vnc.sh $RATHENAPASS"
+sudo -u admin sh -c "./vnc.sh $adminPASS"
 rm vnc.sh
 sudo -u admin sh -c "myvncserver stop"
 mkdir -p /home/admin/.config/xfce4/xfconf/xfce-perchannel-xml/
@@ -184,7 +181,7 @@ chown -R admin:admin /home/admin/
 
 
 echo "${BLUE}Step 11/${STEPS}:${NC} Grabbing rA Source Files"
-sudo -u admin sh -c "git clone -q ${URL_RAGIT} /home/admin/rAthena/"
+sudo -u admin sh -c "git clone -q ${URL_RAGIT} /home/admin/Desktop/admin/"
 echo ""
 
 
@@ -192,7 +189,7 @@ echo ""
 #echo "${BLUE}Step 12/${STEPS}:${NC} Performing Initial rA Compile"
 #echo "This step will take time.. please be patient"
 #echo "You may see warnings here - this is normal"
-#cd /home/admin/rAthena
+#cd /home/admin/Desktop/admin
 #sudo -u admin sh -c "./configure > /dev/null"
 #sudo -u admin sh -c "make server > /dev/null"
 #sudo -u admin sh -c "chmod a+x login-server && chmod a+x char-server && chmod a+x map-server"
@@ -205,22 +202,22 @@ mysqladmin -u root -pragnarok create ragnarok
 mysql -u root -pragnarok -e "CREATE USER ragnarok@localhost IDENTIFIED BY 'princess21';"
 mysql -u root -pragnarok -e "GRANT ALL PRIVILEGES ON ragnarok.* TO 'ragnarok'@'localhost';"
 mysql -u root -pragnarok -e "FLUSH PRIVILEGES;"
-mysql -u root -pragnarok ragnarok  < /home/admin/rAthena/sql-files/main.sql
-mysql -u root -pragnarok ragnarok  < /home/admin/rAthena/sql-files/logs.sql
-mysql -u root -pragnarok ragnarok  < /home/admin/rAthena/sql-files/item_cash_db.sql
-mysql -u root -pragnarok ragnarok  < /home/admin/rAthena/sql-files/item_cash_db2.sql
-mysql -u root -pragnarok ragnarok  < /home/admin/rAthena/sql-files/item_db.sql
-mysql -u root -pragnarok ragnarok  < /home/admin/rAthena/sql-files/item_db2.sql
-mysql -u root -pragnarok ragnarok  < /home/admin/rAthena/sql-files/item_db2_re.sql
-mysql -u root -pragnarok ragnarok  < /home/admin/rAthena/sql-files/item_db_re.sql
-mysql -u root -pragnarok ragnarok  < /home/admin/rAthena/sql-files/mob_db.sql
-mysql -u root -pragnarok ragnarok  < /home/admin/rAthena/sql-files/mob_db2.sql
-mysql -u root -pragnarok ragnarok  < /home/admin/rAthena/sql-files/mob_db2_re.sql
-mysql -u root -pragnarok ragnarok  < /home/admin/rAthena/sql-files/mob_db_re.sql
-mysql -u root -pragnarok ragnarok  < /home/admin/rAthena/sql-files/mob_skill_db.sql
-mysql -u root -pragnarok ragnarok  < /home/admin/rAthena/sql-files/mob_skill_db2.sql
-mysql -u root -pragnarok ragnarok  < /home/admin/rAthena/sql-files/mob_skill_db2_re.sql
-mysql -u root -pragnarok ragnarok  < /home/admin/rAthena/sql-files/mob_skill_db_re.sql
+mysql -u root -pragnarok ragnarok  < /home/admin/Desktop/admin/sql-files/main.sql
+mysql -u root -pragnarok ragnarok  < /home/admin/Desktop/admin/sql-files/logs.sql
+mysql -u root -pragnarok ragnarok  < /home/admin/Desktop/admin/sql-files/item_cash_db.sql
+mysql -u root -pragnarok ragnarok  < /home/admin/Desktop/admin/sql-files/item_cash_db2.sql
+mysql -u root -pragnarok ragnarok  < /home/admin/Desktop/admin/sql-files/item_db.sql
+mysql -u root -pragnarok ragnarok  < /home/admin/Desktop/admin/sql-files/item_db2.sql
+mysql -u root -pragnarok ragnarok  < /home/admin/Desktop/admin/sql-files/item_db2_re.sql
+mysql -u root -pragnarok ragnarok  < /home/admin/Desktop/admin/sql-files/item_db_re.sql
+mysql -u root -pragnarok ragnarok  < /home/admin/Desktop/admin/sql-files/mob_db.sql
+mysql -u root -pragnarok ragnarok  < /home/admin/Desktop/admin/sql-files/mob_db2.sql
+mysql -u root -pragnarok ragnarok  < /home/admin/Desktop/admin/sql-files/mob_db2_re.sql
+mysql -u root -pragnarok ragnarok  < /home/admin/Desktop/admin/sql-files/mob_db_re.sql
+mysql -u root -pragnarok ragnarok  < /home/admin/Desktop/admin/sql-files/mob_skill_db.sql
+mysql -u root -pragnarok ragnarok  < /home/admin/Desktop/admin/sql-files/mob_skill_db2.sql
+mysql -u root -pragnarok ragnarok  < /home/admin/Desktop/admin/sql-files/mob_skill_db2_re.sql
+mysql -u root -pragnarok ragnarok  < /home/admin/Desktop/admin/sql-files/mob_skill_db_re.sql
 mysql -u root -pragnarok -e "USE ragnarok; UPDATE login SET userid = '${USERID}', user_pass = 'princess21' where sex = 'S';"
 echo ""
 
@@ -230,7 +227,7 @@ echo "${BLUE}Step 14/${STEPS}:${NC} Configuring FluxCP"
 rm /var/www/html/index.html
 git clone -q ${URL_FLUXGIT} /var/www/html/
 cd /var/www/html/
-wget -q https://raw.githubusercontent.com/gamingmagic/debianrathena/master/diff.diff
+wget -q https://raw.githubusercontent.com/gamingmagic/unattended-installer/master/diff.diff
 echo "diff --git a/config/application.php b/config/application.php" >> /var/www/html/diff.diff
 echo "--- a/config/application.php" >> /var/www/html/diff.diff
 echo "+++ b/config/application.php" >> /var/www/html/diff.diff
@@ -266,10 +263,10 @@ echo " 			'Persistent' => true," >> /var/www/html/diff.diff
 echo " 			'Timezone'   => null // Possible values is as described in the comment in DbConfig." >> /var/www/html/diff.diff
 git apply diff.diff
 rm /var/www/html/diff.diff
-usermod -a -G www-data rathena
+usermod -a -G www-data admin
 chown -R www-data:www-data /var/www/html
 chmod -R 0774 /var/www/html
-ln -s /var/www/html /home/admin/FluxCP
+ln -s /var/www/html /home/admin/Desktop/FluxCP
 echo ""
 
 
@@ -342,26 +339,26 @@ cd /home/
 
 
 echo "${BLUE}Step 17/${STEPS}:${NC} Preparing auto-config import files"
-echo "//fenrirmachine\n" >> /home/admin/Desktop/rAthena/conf/import/char_conf.txt
-echo "userid: ${USERID}" >> /home/admin/Desktop/rAthena/conf/import/char_conf.txt
-echo "passwd: princess21" >> /home/admin/Desktop/rAthena/conf/import/char_conf.txt
-echo "char_ip: ${SERVER_IP}" >> /home/admin/Desktop/rAthena/conf/import/char_conf.txt
+echo "//fenrirmachine\n" >> /home/admin/Desktop/admin/conf/import/char_conf.txt
+echo "userid: ${USERID}" >> /home/admin/Desktop/admin/conf/import/char_conf.txt
+echo "passwd: princess21" >> /home/admin/Desktop/admin/conf/import/char_conf.txt
+echo "char_ip: ${SERVER_IP}" >> /home/admin/Desktop/admin/conf/import/char_conf.txt
 
-echo "//fenrirmachine\n" >> /home/admin/Desktop/rAthena/conf/import/map_conf.txt
-echo "userid: ${USERID}" >> /home/admin/Desktop/rAthena/conf/import/map_conf.txt
-echo "passwd: princess21" >> /home/admin/Desktop/rAthena/conf/import/map_conf.txt
-echo "map_ip: ${SERVER_IP}" >> /home/admin/Desktop/rAthena/conf/import/map_conf.txt
+echo "//fenrirmachine\n" >> /home/admin/Desktop/admin/conf/import/map_conf.txt
+echo "userid: ${USERID}" >> /home/admin/Desktop/admin/conf/import/map_conf.txt
+echo "passwd: princess21" >> /home/admin/Desktop/admin/conf/import/map_conf.txt
+echo "map_ip: ${SERVER_IP}" >> /home/admin/Desktop/admin/conf/import/map_conf.txt
 
-echo "//fenrirmachine\n" >> /home/admin/Desktop/rAthena/conf/import/inter_conf.txt
-echo "//use_sql_db: yes" >> /home/admin/Desktop/rAthena/conf/import/inter_conf.txt
-echo "login_server_pw: princess21" >> /home/admin/Desktop/rAthena/conf/import/inter_conf.txt
-echo "ipban_db_pw: princess21" >> /home/admin/Desktop/rAthena/conf/import/inter_conf.txt
-echo "char_server_pw: princess21" >> /home/admin/Desktop/rAthena/conf/import/inter_conf.txt
-echo "map_server_pw: princess21" >> /home/admin/Desktop/rAthena/conf/import/inter_conf.txt
-echo "log_db_pw: princess21" >> /home/admin/Desktop/rAthena/conf/import/inter_conf.txt
+echo "//fenrirmachine\n" >> /home/admin/Desktop/admin/conf/import/inter_conf.txt
+echo "//use_sql_db: yes" >> /home/admin/Desktop/admin/conf/import/inter_conf.txt
+echo "login_server_pw: princess21" >> /home/admin/Desktop/admin/conf/import/inter_conf.txt
+echo "ipban_db_pw: princess21" >> /home/admin/Desktop/admin/conf/import/inter_conf.txt
+echo "char_server_pw: princess21" >> /home/admin/Desktop/admin/conf/import/inter_conf.txt
+echo "map_server_pw: princess21" >> /home/admin/Desktop/admin/conf/import/inter_conf.txt
+echo "log_db_pw: princess21" >> /home/admin/Desktop/admin/conf/import/inter_conf.txt
 echo ""
 
-touch /home/admin/Info.txt
+touch /home/admin/Desktop/Info.txt
 echo "fenrirmachine\n" >> /home/admin/Desktop/Info.txt
 echo "Server IP: ${SERVER_IP}\n" >> /home/admin/Desktop/Info.txt
 echo "-- MySQL --" >> /home/admin/Desktop/Info.txt
@@ -371,8 +368,8 @@ echo "User: ragnarok" >> /home/admin/Desktop/Info.txt
 echo "Password: princess21\n" >> /home/admin/Desktop/Info.txt
 
 echo "-- SSH User --" >> /home/admin/Desktop/Info.txt
-echo "User: rathena" >> /home/admin/Desktop/Info.txt
-echo "Password: $RATHENAPASS\n" >> /home/admin/Desktop/Info.txt
+echo "User: admin" >> /home/admin/Desktop/Info.txt
+echo "Password: $adminPASS\n" >> /home/admin/Desktop/Info.txt
 
 echo "-- FluxCP --" >> /home/admin/Desktop/Info.txt
 echo " * Access FluxCP from this server using the browser and going to http://localhost" >> /home/admin/Desktop/Info.txt
@@ -380,7 +377,7 @@ echo " or" >> /home/admin/Desktop/Info.txt
 echo " * Access FluxCP from anywhere by browsing to http://${SERVER_IP}/" >> /home/admin/Desktop/Info.txt
 echo "The Installer Password is the default for FluxCP, which is secretpassword\n" >> /home/admin/Desktop/Info.txt
 
-echo "-- phpMyAdmin --" >> /home/admin/Info.txt
+echo "-- phpMyAdmin --" >> /home/admin/Desktop/Info.txt
 echo " * Access phpMyAdmin from this server using the browser and going to http://localhost/phpmyadmin" >> /home/admin/Desktop/Info.txt
 echo " or" >> /home/admin/Desktop/Info.txt
 echo " * Access phpMyAdmin from anywhere by browsing to http://${SERVER_IP}/phpmyadmin" >> /home/admin/Desktop/Info.txt
@@ -395,7 +392,7 @@ echo " * Filesystem: FluxCP Desktop Shortcut -> downloads folder" >> /home/admin
 
 
 echo "${BLUE}Step 18/${STEPS}:${NC} Finishing up!"
-sudo -u rathena sh -c "myvncserver start"
+sudo -u admin sh -c "myvncserver start"
 echo ""
 echo ""
 echo ""
@@ -407,7 +404,7 @@ echo "${YELLOW}*****************************************************************
 echo ""
 echo "${BLUE}All done!${NC}"
 echo "${GREEN} -- System Stuff${NC}"
-echo "Linux User 'rathena' Password: ${RATHENAPASS}"
+echo "Linux User 'admin' Password: ${adminPASS}"
 echo "Server IP: ${SERVER_IP}"
 echo ""
 echo "${GREEN} -- MySQL Stuff${NC}"
@@ -423,7 +420,7 @@ echo "${GREEN} -- FluxCP Stuff${NC}"
 echo "Control Panel: http://${SERVER_IP}/"
 echo "After FluxCP installation, full installer will be available via your site."
 echo ""
-echo "${BLUE}You can now login via VNC and click Start rAthena on the desktop.${NC}"
+echo "${BLUE}You can now login via VNC and click Start admin on the desktop.${NC}"
 echo "${YELLOW}*****************************************************************${NC}"
 rm /home/cerv
 exit 0
