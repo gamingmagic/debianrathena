@@ -97,14 +97,14 @@ echo ""
 
 
 
-echo "${BLUE}Step 7/${STEPS}:${NC} Creating User: rathena"
+echo "${BLUE}Step 7/${STEPS}:${NC} Creating User: admin"
 echo "${YELLOW}This process is automatic and doesn't require user input.${NC}"
 echo "${YELLOW}Please do not type at the password prompt.${NC}"
 wget -q https://raw.githubusercontent.com/gamingmagic/debianrathena/master/createuser.sh
 chmod +x createuser.sh
 ./createuser.sh $RATHENAPASS
 rm createuser.sh
-gpasswd -a rathena sudo
+gpasswd -a admin sudo
 echo ""
 
 
@@ -115,11 +115,11 @@ cd /usr/share/fenrirmachine/
 wget -q https://github.com/gamingmagic/debianrathena/raw/master/files.zip
 unzip -qq files.zip
 cd links
-mkdir -p /home/admin
-cp -R * /home/admin
+mkdir -p /home/admin/Desktop
+cp -R * /home/admin/Desktop
 cd /usr/share/fenrirmachine/scripts
 chmod +x *
-cd /home/admin
+cd /home/admin/Desktop
 chmod +x *
 echo ""
 
@@ -140,15 +140,15 @@ echo ""
 
 
 echo "${BLUE}Step 10/${STEPS}:${NC} Installing fenrirmachine Files"
-chown -R rathena:rathena /home/rathena
-chown -R rathena:rathena /usr/share/fenrirmachine
-cd /home/rathena
-sudo -u rathena sh -c "wget -q https://raw.githubusercontent.com/gamingmagic/debianrathena/master/vnc.sh"
-#sudo -u rathena sh -c "unzip -qq vnc.zip"
-sudo -u rathena sh -c "chmod +x vnc.sh"
-sudo -u rathena sh -c "./vnc.sh $RATHENAPASS"
+chown -R admin:admin /home/admin
+chown -R admin:admin /usr/share/fenrirmachine
+cd /home/admin
+sudo -u admin sh -c "wget -q https://raw.githubusercontent.com/gamingmagic/debianrathena/master/vnc.sh"
+#sudo -u admin sh -c "unzip -qq vnc.zip"
+sudo -u admin sh -c "chmod +x vnc.sh"
+sudo -u admin sh -c "./vnc.sh $RATHENAPASS"
 rm vnc.sh
-sudo -u rathena sh -c "myvncserver stop"
+sudo -u admin sh -c "myvncserver stop"
 mkdir -p /home/admin/.config/xfce4/xfconf/xfce-perchannel-xml/
 touch /home/admin/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" >> /home/admin/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml
@@ -179,12 +179,12 @@ echo "" >> /home/admin/.config/mimeapps.list
 echo "[Added Associations]" >> /home/admin/.config/mimeapps.list
 echo "text/plain=mousepad.desktop;" >> /home/admin/.config/mimeapps.list
 echo ""
-chown -R rathena:rathena /home/admin/
+chown -R admin:admin /home/admin/
 
 
 
 echo "${BLUE}Step 11/${STEPS}:${NC} Grabbing rA Source Files"
-sudo -u rathena sh -c "git clone -q ${URL_RAGIT} /home/admin/rAthena/"
+sudo -u admin sh -c "git clone -q ${URL_RAGIT} /home/admin/rAthena/"
 echo ""
 
 
@@ -193,9 +193,9 @@ echo ""
 #echo "This step will take time.. please be patient"
 #echo "You may see warnings here - this is normal"
 #cd /home/admin/rAthena
-#sudo -u rathena sh -c "./configure > /dev/null"
-#sudo -u rathena sh -c "make server > /dev/null"
-#sudo -u rathena sh -c "chmod a+x login-server && chmod a+x char-server && chmod a+x map-server"
+#sudo -u admin sh -c "./configure > /dev/null"
+#sudo -u admin sh -c "make server > /dev/null"
+#sudo -u admin sh -c "chmod a+x login-server && chmod a+x char-server && chmod a+x map-server"
 #echo ""
 
 
@@ -342,55 +342,55 @@ cd /home/
 
 
 echo "${BLUE}Step 17/${STEPS}:${NC} Preparing auto-config import files"
-echo "//fenrirmachine\n" >> /home/admin/rAthena/conf/import/char_conf.txt
-echo "userid: ${USERID}" >> /home/admin/rAthena/conf/import/char_conf.txt
-echo "passwd: princess21" >> /home/admin/rAthena/conf/import/char_conf.txt
-echo "char_ip: ${SERVER_IP}" >> /home/admin/rAthena/conf/import/char_conf.txt
+echo "//fenrirmachine\n" >> /home/admin/Desktop/rAthena/conf/import/char_conf.txt
+echo "userid: ${USERID}" >> /home/admin/Desktop/rAthena/conf/import/char_conf.txt
+echo "passwd: princess21" >> /home/admin/Desktop/rAthena/conf/import/char_conf.txt
+echo "char_ip: ${SERVER_IP}" >> /home/admin/Desktop/rAthena/conf/import/char_conf.txt
 
-echo "//fenrirmachine\n" >> /home/admin/rAthena/conf/import/map_conf.txt
-echo "userid: ${USERID}" >> /home/admin/rAthena/conf/import/map_conf.txt
-echo "passwd: princess21" >> /home/admin/rAthena/conf/import/map_conf.txt
-echo "map_ip: ${SERVER_IP}" >> /home/admin/rAthena/conf/import/map_conf.txt
+echo "//fenrirmachine\n" >> /home/admin/Desktop/rAthena/conf/import/map_conf.txt
+echo "userid: ${USERID}" >> /home/admin/Desktop/rAthena/conf/import/map_conf.txt
+echo "passwd: princess21" >> /home/admin/Desktop/rAthena/conf/import/map_conf.txt
+echo "map_ip: ${SERVER_IP}" >> /home/admin/Desktop/rAthena/conf/import/map_conf.txt
 
-echo "//fenrirmachine\n" >> /home/admin/rAthena/conf/import/inter_conf.txt
-echo "//use_sql_db: yes" >> /home/admin/rAthena/conf/import/inter_conf.txt
-echo "login_server_pw: princess21" >> /home/admin/rAthena/conf/import/inter_conf.txt
-echo "ipban_db_pw: princess21" >> /home/admin/rAthena/conf/import/inter_conf.txt
-echo "char_server_pw: princess21" >> /home/admin/rAthena/conf/import/inter_conf.txt
-echo "map_server_pw: princess21" >> /home/admin/rAthena/conf/import/inter_conf.txt
-echo "log_db_pw: princess21" >> /home/admin/rAthena/conf/import/inter_conf.txt
+echo "//fenrirmachine\n" >> /home/admin/Desktop/rAthena/conf/import/inter_conf.txt
+echo "//use_sql_db: yes" >> /home/admin/Desktop/rAthena/conf/import/inter_conf.txt
+echo "login_server_pw: princess21" >> /home/admin/Desktop/rAthena/conf/import/inter_conf.txt
+echo "ipban_db_pw: princess21" >> /home/admin/Desktop/rAthena/conf/import/inter_conf.txt
+echo "char_server_pw: princess21" >> /home/admin/Desktop/rAthena/conf/import/inter_conf.txt
+echo "map_server_pw: princess21" >> /home/admin/Desktop/rAthena/conf/import/inter_conf.txt
+echo "log_db_pw: princess21" >> /home/admin/Desktop/rAthena/conf/import/inter_conf.txt
 echo ""
 
 touch /home/admin/Info.txt
-echo "fenrirmachine\n" >> /home/admin/Info.txt
-echo "Server IP: ${SERVER_IP}\n" >> /home/admin/Info.txt
-echo "-- MySQL --" >> /home/admin/Info.txt
-echo "root password is 'ragnarok', but can only be accessed locally from this system." >> /home/admin/Info.txt
-echo "For all other MySQL uses, please use the following credentials:" >> /home/admin/Info.txt
-echo "User: ragnarok" >> /home/admin/Info.txt
-echo "Password: princess21\n" >> /home/admin/Info.txt
+echo "fenrirmachine\n" >> /home/admin/Desktop/Info.txt
+echo "Server IP: ${SERVER_IP}\n" >> /home/admin/Desktop/Info.txt
+echo "-- MySQL --" >> /home/admin/Desktop/Info.txt
+echo "root password is 'ragnarok', but can only be accessed locally from this system." >> /home/admin/Desktop/Info.txt
+echo "For all other MySQL uses, please use the following credentials:" >> /home/admin/Desktop/Info.txt
+echo "User: ragnarok" >> /home/admin/Desktop/Info.txt
+echo "Password: princess21\n" >> /home/admin/Desktop/Info.txt
 
-echo "-- SSH User --" >> /home/admin/Info.txt
-echo "User: rathena" >> /home/admin/Info.txt
-echo "Password: $RATHENAPASS\n" >> /home/admin/Info.txt
+echo "-- SSH User --" >> /home/admin/Desktop/Info.txt
+echo "User: rathena" >> /home/admin/Desktop/Info.txt
+echo "Password: $RATHENAPASS\n" >> /home/admin/Desktop/Info.txt
 
-echo "-- FluxCP --" >> /home/admin/Info.txt
-echo " * Access FluxCP from this server using the browser and going to http://localhost" >> /home/admin/Info.txt
-echo " or" >> /home/admin/Info.txt
-echo " * Access FluxCP from anywhere by browsing to http://${SERVER_IP}/" >> /home/admin/Info.txt
-echo "The Installer Password is the default for FluxCP, which is secretpassword\n" >> /home/admin/Info.txt
+echo "-- FluxCP --" >> /home/admin/Desktop/Info.txt
+echo " * Access FluxCP from this server using the browser and going to http://localhost" >> /home/admin/Desktop/Info.txt
+echo " or" >> /home/admin/Desktop/Info.txt
+echo " * Access FluxCP from anywhere by browsing to http://${SERVER_IP}/" >> /home/admin/Desktop/Info.txt
+echo "The Installer Password is the default for FluxCP, which is secretpassword\n" >> /home/admin/Desktop/Info.txt
 
 echo "-- phpMyAdmin --" >> /home/admin/Info.txt
-echo " * Access phpMyAdmin from this server using the browser and going to http://localhost/phpmyadmin" >> /home/admin/Info.txt
-echo " or" >> /home/admin/Info.txt
-echo " * Access phpMyAdmin from anywhere by browsing to http://${SERVER_IP}/phpmyadmin" >> /home/admin/Info.txt
-echo "Access from root user is disabled, so you will need to login as 'ragnarok' with your MySQL password.\n" >> /home/admin/Info.txt
+echo " * Access phpMyAdmin from this server using the browser and going to http://localhost/phpmyadmin" >> /home/admin/Desktop/Info.txt
+echo " or" >> /home/admin/Desktop/Info.txt
+echo " * Access phpMyAdmin from anywhere by browsing to http://${SERVER_IP}/phpmyadmin" >> /home/admin/Desktop/Info.txt
+echo "Access from root user is disabled, so you will need to login as 'ragnarok' with your MySQL password.\n" >> /home/admin/Desktop/Info.txt
 
-echo "-- Full Client --" >> /home/admin/Info.txt
-echo "A full client will be made available to you on your downloads page straight" >> /home/admin/Info.txt
-echo " after completing the FluxCP installation process. This is located at:" >> /home/admin/Info.txt
-echo " * URL: http://${SERVER_IP}/?module=pages&action=content&page=downloads" >> /home/admin/Info.txt
-echo " * Filesystem: FluxCP Desktop Shortcut -> downloads folder" >> /home/admin/Info.txt
+echo "-- Full Client --" >> /home/admin/Desktop/Info.txt
+echo "A full client will be made available to you on your downloads page straight" >> /home/admin/Desktop/Info.txt
+echo " after completing the FluxCP installation process. This is located at:" >> /home/admin/Desktop/Info.txt
+echo " * URL: http://${SERVER_IP}/?module=pages&action=content&page=downloads" >> /home/admin/Desktop/Info.txt
+echo " * Filesystem: FluxCP Desktop Shortcut -> downloads folder" >> /home/admin/Desktop/Info.txt
 
 
 
