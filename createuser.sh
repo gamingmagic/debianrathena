@@ -1,6 +1,6 @@
 #!/usr/bin/expect
 set password [lindex $argv 0]
-spawn adduser rathena
+spawn adduser admin
 
 expect "New password:"
 send "$password\r"
